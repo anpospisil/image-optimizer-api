@@ -140,7 +140,7 @@ def apply_moderation(
     img: Image.Image,
     mode: str,
     sticker_path: str | None = None,
-    score_threshold: float = 0.01,
+    score_threshold: float = 0.5,
     blur_intensity: int = 25,
 ) -> tuple[Image.Image, list[dict]]:
     """

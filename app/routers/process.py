@@ -92,13 +92,6 @@ async def process_image(
 
     original_w, original_h = img.size
 
-    # --- Validate requested platforms ---
-    unknown = [p for p in cfg.platforms if p not in PLATFORM_PRESETS]
-    if unknown:
-        raise HTTPException(
-            status_code=422,
-            detail=f"Unknown platform key(s): {unknown}. Call /api/presets for valid keys.",
-        )
 
     # -----------------------------------------------------------------------
     # Preview mode — detect only, return bounding boxes, no output images
@@ -139,6 +132,16 @@ async def process_image(
                 image_height=original_h,
             ).model_dump()
         )
+
+
+    # --- Validate requested platforms ---
+    unknown = [p for p in cfg.platforms if p not in PLATFORM_PRESETS]
+    if unknown:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Unknown platform key(s): {unknown}. Call /api/presets for valid keys.",
+        )
+        
 
     # -----------------------------------------------------------------------
     # Full processing mode
