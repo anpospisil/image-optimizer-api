@@ -1,8 +1,11 @@
 [phases.setup]
-nixPkgs = ["libGL", "glib", "python312"]
+nixPkgs = ["python312", "glib"]
 
 [phases.install]
-cmds = ["python3 -m venv --copies /opt/venv && . /opt/venv/bin/activate && pip install -r requirements.txt"]
+cmds = [
+  "python3 -m venv --copies /opt/venv",
+  ". /opt/venv/bin/activate && pip install -r requirements.txt -c constraints.txt"
+]
 
 [phases.build]
 cmds = []
