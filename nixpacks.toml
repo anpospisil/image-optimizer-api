@@ -1,2 +1,11 @@
 [phases.setup]
-nixPkgs = ["libGL", "glib"]
+nixPkgs = ["libGL", "glib", "python312"]
+
+[phases.install]
+cmds = ["python3 -m venv --copies /opt/venv && . /opt/venv/bin/activate && pip install -r requirements.txt"]
+
+[phases.build]
+cmds = []
+
+[start]
+cmd = ". /opt/venv/bin/activate && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
