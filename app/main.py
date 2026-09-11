@@ -24,3 +24,7 @@ app.include_router(process.router, prefix="/api")
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
+
+@app.head("/health")
+def health_check_head():
+    return {"status": "ok"}
