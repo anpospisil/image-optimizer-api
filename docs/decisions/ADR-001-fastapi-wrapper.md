@@ -5,7 +5,7 @@
 
 ## Context
 
-The image processing pipeline (crop, resize, watermark, content moderation) was
+The image processing pipeline (crop, resize, watermark, content classification) was
 originally a Python script using PIL, OpenCV, and `dghs-imgutils` (a NudeNet wrapper).
 
 When moving to a web architecture, we needed to decide whether to:
@@ -19,7 +19,7 @@ over HTTP.
 
 ## Reasoning
 
-The content moderation pipeline (`dghs-imgutils` / NudeNet) has no viable Node.js
+The content classification pipeline (`dghs-imgutils`) has no viable Node.js
 equivalent. Rewriting it would mean either finding an inferior detection library or
 maintaining a Python sidecar anyway — at which point we'd have two runtimes *and*
 a rewrite. The image processing logic (PIL crop/resize/watermark) works correctly
@@ -28,12 +28,12 @@ introduces risk with no functional gain.
 
 Sharp (Node) is faster than PIL for pure resize operations, but performance is not
 a bottleneck at our current scale. This is a candidate for a future optimisation
-once the moderation pipeline is separated.
+once the classification pipeline is separated.
 
 ## Alternatives Considered
 
-**Node.js + Sharp for everything:** Rejected. No NudeNet equivalent in Node.
-Sharp is faster for resizing but the moderation rewrite risk is too high.
+**Node.js + Sharp for everything:** Rejected. No equivalent classification in Node.
+Sharp is faster for resizing but the classification rewrite risk is too high.
 
 **Node.js + Python sidecar only for detection:** Viable but adds complexity.
 Two runtimes plus a rewrite of the image processing. Deferred to a future ADR
