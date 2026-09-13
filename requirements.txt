@@ -6,4 +6,4 @@ opencv-python-headless>=4.9.0
 numpy>=1.26.0
 pydantic>=2.7.0
 python-dotenv>=1.0.0
-dghs-imgutils[gpu]>=0.14.0  # NudeNet wrapper — swap for dghs-imgutils if no GPU
+dghs-imgutils[gpu]>=0.14.0  # Image classification for content filtering; drop [gpu] extra if no GPU available
