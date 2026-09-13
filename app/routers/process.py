@@ -19,7 +19,7 @@ from PIL import Image
 
 from app.presets import PLATFORM_PRESETS
 from app.processing import (
-    ModerationMode,
+    SafetyMode,
     add_watermark,
     apply_moderation,
     image_to_bytes,
@@ -97,7 +97,7 @@ async def process_image(
     # Preview mode — detect only, return bounding boxes, no output images
     # -----------------------------------------------------------------------
     if cfg.preview_only:
-        if cfg.moderation_mode == ModerationMode.OFF:
+        if cfg.safety_mode == SafetyMode.OFF:
             return JSONResponse(
                 PreviewResponse(
                     detections=[],
@@ -109,7 +109,7 @@ async def process_image(
 
         _, raw_detections = apply_moderation(
             img,
-            mode=cfg.moderation_mode,
+            mode=cfg.safety_mode,
             sticker_path=os.getenv("STICKER_PATH", "assets/sticker.png"),
             score_threshold=cfg.score_threshold,
         )
@@ -151,10 +151,10 @@ async def process_image(
     moderated_img = img
     all_detections: list[DetectionResult] = []
 
-    if cfg.moderation_mode != ModerationMode.OFF:
+    if cfg.safety_mode != SafetyMode.OFF:
         moderated_img, raw_detections = apply_moderation(
             img,
-            mode=cfg.moderation_mode,
+            mode=cfg.safety_mode,
             sticker_path=os.getenv("STICKER_PATH", "assets/sticker.png"),
             score_threshold=cfg.score_threshold,
             blur_intensity=cfg.blur_intensity,
@@ -205,7 +205,7 @@ async def process_image(
         outputs=outputs,
         detections=all_detections,
         detection_count=len(all_detections),
-        moderation_applied=cfg.moderation_mode != ModerationMode.OFF,
+        moderation_applied=cfg.safety_mode != SafetyMode.OFF,
     )
 
     return StreamingResponse(
