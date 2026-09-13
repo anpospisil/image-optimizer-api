@@ -20,9 +20,9 @@ class ProcessingConfig(BaseModel):
     platforms: list[str] = Field(
         ...,
         description="List of platform preset keys to generate outputs for.",
-        example=["bluesky_square", "twitter_landscape", "pixiv"],
+        example=["bluesky_square", "twitter_landscape", "facebook_square"],
     )
-    moderation_mode: Literal["off", "blur", "sticker"] = Field(
+    safety_mode: Literal["off", "blur", "sticker"] = Field(
         default="off",
         description="Content moderation mode. 'off' skips detection entirely.",
     )
@@ -49,7 +49,7 @@ class ProcessingConfig(BaseModel):
         default=25,
         ge=1,
         le=99,
-        description="Gaussian blur kernel size. Only used when moderation_mode='blur'.",
+        description="Gaussian blur kernel size. Only used when safety_mode='blur'.",
     )
 
 
