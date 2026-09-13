@@ -3,7 +3,7 @@
 FastAPI service powering the Image Optimizer. Handles image processing,
 platform-specific resizing, watermarking, and optional content moderation.
 
-**API docs:** https://image-optimizer-api-0r7m.onrender.com/docs
+**API:** https://image-optimizer-api-0r7m.onrender.com/docs
 
 ---
 
